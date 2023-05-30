@@ -25,7 +25,7 @@ async function fetchComments(id: string) {
 }
 
 // @ts-ignore
-export async function BlogPost({ promise }) {
+async function BlogPost({ promise }) {
   const post = await promise;
 
   return (
@@ -37,7 +37,7 @@ export async function BlogPost({ promise }) {
 }
 
 // @ts-ignore
-export async function Comments({ promise }) {
+async function Comments({ promise }) {
   const comments = await promise;
   return (
     <>
