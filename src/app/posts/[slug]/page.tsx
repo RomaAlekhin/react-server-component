@@ -24,6 +24,7 @@ async function fetchComments(id: string) {
   return res.json();
 }
 
+// @ts-ignore
 export async function BlogPost({ promise }) {
   const post = await promise;
 
@@ -35,6 +36,7 @@ export async function BlogPost({ promise }) {
   );
 }
 
+// @ts-ignore
 export async function Comments({ promise }) {
   const comments = await promise;
   return (
@@ -59,9 +61,11 @@ export default async function Post({ params }) {
 
   return (
     <div className="flex flex-col max-w-7xl p-10 space-y-10">
+      {/* @ts-ignore */}
       <BlogPost promise={postPromise} />
       <h2 className="text-xl">Comments</h2>
       <Suspense fallback={<div>Loading Comments..</div>}>
+        {/* @ts-ignore */}
         <Comments promise={commentsPromise} />
       </Suspense>
       <div></div>
