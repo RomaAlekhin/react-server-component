@@ -1,5 +1,7 @@
 import "./globals.css";
 import { Work_Sans } from "next/font/google";
+import classNames from "classnames";
+import { Navigation } from "@/components/layout";
 
 const workSans = Work_Sans({ subsets: ["latin"] });
 
@@ -14,8 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={workSans.className}>{children}</body>
+    <html lang="en" className="dark h-full">
+      <body className={classNames(workSans.className, "h-full")}>
+        <div className="min-h-full">
+          <Navigation />
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
