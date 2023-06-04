@@ -5,14 +5,17 @@ import { FormCard } from "@/components/base/FormCard";
 import { InputField } from "@/components/form/Input";
 import { TextAreaField } from "@/components/form/TextArea";
 import { Post, Prisma } from "@prisma/client";
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
 interface Props {
   post?: Post;
-  onSave: (post: Prisma.PostCreateInput) => {};
+  onSave: (post: Prisma.PostCreateInput) => Promise<Post>;
 }
 
 export const PostEdit: React.FC<Props> = ({ post, onSave }) => {
+  const { push, refresh } = useRouter();
+
   const [form, setForm] = useState<Prisma.PostCreateInput>({
     title: post?.title ?? "",
     content: post?.content ?? "",
@@ -25,9 +28,11 @@ export const PostEdit: React.FC<Props> = ({ post, onSave }) => {
     []
   );
 
-  const onSaveHandler = useCallback(() => {
+  const onSaveHandler = useCallback(async () => {
     if (!form) return;
-    onSave(form);
+    const newPost = await onSave(form);
+    push(`/posts/${newPost.id}`);
+    refresh();
   }, [form]);
 
   return (

@@ -1,11 +1,11 @@
 import { Content, Header } from "@/components/layout";
 
-export default function Home() {
+export default function About() {
   return (
     <>
-      <Header title="Home" />
+      <Header title="About" />
       <Content>
-        <div>It's a home page</div>
+        <div>It's an about page</div>
       </Content>
     </>
   );
