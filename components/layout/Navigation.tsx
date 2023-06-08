@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
-import { Home, Info, Newspaper, PlusCircle } from "lucide-react";
+import { Home, Info, Newspaper, Clapperboard } from "lucide-react";
 
 interface Link {
   name: string;
@@ -29,14 +29,19 @@ const links: Link[] = [
     icon: <Newspaper />,
   },
   {
-    name: "Add posts",
-    href: "/posts/add",
-    icon: <PlusCircle />,
+    name: "Movies",
+    href: "/movies",
+    icon: <Clapperboard />,
   },
 ];
 
 export const Navigation = () => {
   const pathname = usePathname();
+
+  const getIsActiveLink = (href: string) => {
+    if (href === "/") return pathname === href;
+    return pathname.startsWith(href);
+  };
 
   return (
     <nav className="bg-card-foreground">
@@ -56,7 +61,7 @@ export const Navigation = () => {
                   <Link
                     className={classNames(
                       "rounded-md px-3 py-2 text-sm font-medium",
-                      pathname === link.href
+                      getIsActiveLink(link.href)
                         ? "bg-gray-900 text-white"
                         : "text-gray-300 hover:bg-gray-700 hover:text-white"
                     )}
@@ -211,7 +216,7 @@ export const Navigation = () => {
               <Link
                 className={classNames(
                   "px-3 py-2 m-auto text-base font-medium h-full w-full flex items-center justify-center transition-colors",
-                  pathname === link.href
+                  getIsActiveLink(link.href)
                     ? "bg-gray-900 text-white"
                     : "text-gray-300 hover:bg-gray-700 hover:text-white"
                 )}
