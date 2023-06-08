@@ -14,7 +14,8 @@ export default function Movie({
   poster_path,
   release_date,
 }: MovieProps) {
-  const src = `${process.env.THE_MOVIE_DB_IMAGES_URL}${poster_path}`;
+  const imagePath = `${process.env.THE_MOVIE_DB_IMAGES_URL}${poster_path}`;
+
   return (
     <div>
       <Link
@@ -23,7 +24,7 @@ export default function Movie({
       >
         <p className="text-xl font-bold">{title}</p>
         <p className="text-xs">{release_date}</p>
-        <Image src={src} alt={title} width={800} height={800} />
+        <Image src={imagePath} alt={title} width={800} height={800} />
       </Link>
     </div>
   );
