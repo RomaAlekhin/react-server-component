@@ -24,7 +24,6 @@ export default async function MovieDetail({ params }: Props) {
     `${process.env.THE_MOVIE_DB_API_URL}/movie/${slug}?api_key=${process.env.THE_MOVIE_DB_API_KEY}`
   );
   const movie = await data.json();
-  console.log(movie);
   const imagePath = `${process.env.THE_MOVIE_DB_IMAGES_URL}${movie.backdrop_path}`;
   return (
     <>
