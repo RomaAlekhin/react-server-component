@@ -1,32 +1,26 @@
 import { PostEdit } from "@/components/post";
-import { prisma } from "@/lib/prisma";
+import { getPost, updatePost } from "@/lib/actions";
 import { Prisma } from "@prisma/client";
 
 interface Props {
   params: { slug: string };
 }
 export default async function PostAdd({ params }: Props) {
-  const post = await prisma.post.findUnique({
-    where: {
-      id: params.slug,
-    },
-  });
+  const post = await getPost(params.slug);
 
-  const updatePost = async (post: Prisma.PostCreateInput) => {
+  const onSaveHandler = async (post: Prisma.PostCreateInput) => {
     "use server";
-
-    return await prisma.post.update({
-      where: {
-        id: params.slug,
-      },
-      data: post,
-    });
+    return await updatePost(params.slug, post);
   };
 
   return (
-    <div className="flex flex-col items-center w-full h-full p-10">
+    <div className="flex flex-col items-center w-full h-full mt-10">
       <div className="text-2xl font-bold mb-10">Edit post</div>
-      {post ? <PostEdit post={post} onSave={updatePost} /> : "Not found post"}
+      {post ? (
+        <PostEdit post={post} onSave={onSaveHandler} />
+      ) : (
+        "Not found post"
+      )}
     </div>
   );
 }

@@ -1,18 +1,17 @@
 import { PostEdit } from "@/components/post";
-import { prisma } from "@/lib/prisma";
+import { createPost } from "@/lib/actions";
 import { Prisma } from "@prisma/client";
 
-export default async function PostAdd() {
-  const createPost = async (post: Prisma.PostCreateInput) => {
+export default function PostAdd() {
+  const onSaveHandler = async (post: Prisma.PostCreateInput) => {
     "use server";
-
-    return await prisma.post.create({ data: post });
+    return await createPost(post);
   };
 
   return (
-    <div className="flex flex-col items-center w-full h-full p-10 ">
+    <div className="flex flex-col items-center w-full h-full mt-10">
       <div className="text-2xl font-bold mb-10">Add post</div>
-      <PostEdit onSave={createPost} />
+      <PostEdit onSave={onSaveHandler} />
     </div>
   );
 }

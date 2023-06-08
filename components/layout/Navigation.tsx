@@ -1,40 +1,47 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
+import { Home, Info, Newspaper, Clapperboard } from "lucide-react";
 
 interface Link {
   name: string;
   href: string;
+  icon: ReactNode;
 }
 
 const links: Link[] = [
   {
     name: "Home",
     href: "/",
-  },
-  {
-    name: "Dashboard",
-    href: "/dashboard",
+    icon: <Home />,
   },
   {
     name: "About",
     href: "/about",
+    icon: <Info />,
   },
   {
     name: "Posts",
     href: "/posts",
+    icon: <Newspaper />,
   },
   {
-    name: "Add posts",
-    href: "/posts/add",
+    name: "Movies",
+    href: "/movies",
+    icon: <Clapperboard />,
   },
 ];
 
 export const Navigation = () => {
   const pathname = usePathname();
+
+  const getIsActiveLink = (href: string) => {
+    if (href === "/") return pathname === href;
+    return pathname.startsWith(href);
+  };
 
   return (
     <nav className="bg-card-foreground">
@@ -54,7 +61,7 @@ export const Navigation = () => {
                   <Link
                     className={classNames(
                       "rounded-md px-3 py-2 text-sm font-medium",
-                      pathname === link.href
+                      getIsActiveLink(link.href)
                         ? "bg-gray-900 text-white"
                         : "text-gray-300 hover:bg-gray-700 hover:text-white"
                     )}
@@ -157,8 +164,8 @@ export const Navigation = () => {
               </div>
             </div>
           </div>
-          <div className="-mr-2 flex md:hidden">
-            {/* <!-- Mobile menu button --> */}
+          {/* <div className="-mr-2 flex md:hidden">
+            <!-- Mobile menu button -->
             <button
               type="button"
               className="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -166,7 +173,7 @@ export const Navigation = () => {
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
-              {/* <!-- Menu open: "hidden", Menu closed: "block" --> */}
+              <!-- Menu open: "hidden", Menu closed: "block" -->
               <svg
                 className="block h-6 w-6"
                 fill="none"
@@ -181,7 +188,7 @@ export const Navigation = () => {
                   d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
                 />
               </svg>
-              {/* <!-- Menu open: "block", Menu closed: "hidden" --> */}
+              <!-- Menu open: "block", Menu closed: "hidden" -->
               <svg
                 className="hidden h-6 w-6"
                 fill="none"
@@ -197,60 +204,31 @@ export const Navigation = () => {
                 />
               </svg>
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
 
       {/* <!-- Mobile menu, show/hide based on menu state. --> */}
       <div className="md:hidden" id="mobile-menu">
-        <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-          {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-          {/* {links.map((link) => (
-            <Link
-              className={classNames(
-                "rounded-md px-3 py-2 text-sm font-medium",
-                pathname === link.href
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-300 hover:bg-gray-700 hover:text-white"
-              )}
-              href={link.href}
-            >
-              {link.name}
-            </Link>
-          ))} */}
-          <a
-            href="#"
-            className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-            aria-current="page"
-          >
-            Dashboard
-          </a>
-          <a
-            href="#"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          >
-            Team
-          </a>
-          <a
-            href="#"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          >
-            Projects
-          </a>
-          <a
-            href="#"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          >
-            Calendar
-          </a>
-          <a
-            href="#"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          >
-            Reports
-          </a>
+        <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-card-foreground">
+          <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
+            {links.map((link) => (
+              <Link
+                className={classNames(
+                  "px-3 py-2 m-auto text-base font-medium h-full w-full flex items-center justify-center transition-colors",
+                  getIsActiveLink(link.href)
+                    ? "bg-gray-900 text-white"
+                    : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                )}
+                href={link.href}
+                title={link.name}
+              >
+                {link.icon}
+              </Link>
+            ))}
+          </div>
         </div>
-        <div className="border-t border-gray-700 pb-3 pt-4">
+        {/* <div className="border-t border-gray-700 pb-3 pt-4">
           <div className="flex items-center px-5">
             <div className="flex-shrink-0">
               <img
@@ -288,7 +266,7 @@ export const Navigation = () => {
               </svg>
             </button>
           </div>
-          {/* <div className="mt-3 space-y-1 px-2">
+          <div className="mt-3 space-y-1 px-2">
             <a
               href="#"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
@@ -307,8 +285,8 @@ export const Navigation = () => {
             >
               Sign out
             </a>
-          </div> */}
-        </div>
+          </div>
+        </div> */}
       </div>
     </nav>
   );
