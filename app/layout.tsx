@@ -2,6 +2,7 @@ import "./globals.css";
 import { Work_Sans } from "next/font/google";
 import classNames from "classnames";
 import { Navigation } from "@/components/layout";
+import { Provider } from "@/components/Provider";
 
 const workSans = Work_Sans({ subsets: ["latin"] });
 
@@ -18,10 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark h-full">
       <body className={classNames(workSans.className, "h-full")}>
-        <div className="min-h-full">
-          <Navigation />
-          {children}
-        </div>
+        <Provider>
+          <div className="min-h-full">
+            <Navigation />
+            {children}
+          </div>
+        </Provider>
       </body>
     </html>
   );
