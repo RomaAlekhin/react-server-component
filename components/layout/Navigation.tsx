@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { Home, Info, Newspaper, Clapperboard } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 
@@ -41,7 +41,6 @@ const links: Link[] = [
 const profileLinks: Omit<Link, "icon">[] = [
   { name: "Your Profile", href: "/profile" },
   { name: "Settings", href: "/settings" },
-  { name: "Sign out", href: "/signout" },
 ];
 
 const getIsActiveLink = (href: string, pathname: string) => {
@@ -71,6 +70,9 @@ const ProfileMenu = () => {
                 className="h-8 w-8 rounded-full"
                 src={session.user.image}
                 alt={session.user.name ?? ""}
+                width={64}
+                height={64}
+                quality={75}
               />
             ) : (
               <Image
@@ -107,7 +109,7 @@ const ProfileMenu = () => {
               key={link.name}
               href={link.href}
               className={classNames(
-                "block px-4 py-2 text-sm text-gray-700",
+                "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200",
                 getIsActiveLink(link.href, pathname) ? "bg-gray-100" : ""
               )}
               title={link.name}
@@ -115,6 +117,13 @@ const ProfileMenu = () => {
               {link.name}
             </Link>
           ))}
+
+          <span
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer"
+            onClick={() => signOut()}
+          >
+            Sign out
+          </span>
         </div>
       </div>
     </div>
@@ -192,7 +201,7 @@ export const Navigation = () => {
           {session ? (
             <ProfileMenu />
           ) : (
-            <Button asChild variant="secondary">
+            <Button variant="secondary" onClick={() => signIn()}>
               <Link href="/signin">Sign in</Link>
             </Button>
           )}

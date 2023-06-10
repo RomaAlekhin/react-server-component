@@ -4,7 +4,11 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
-    domains: ["image.tmdb.org", "images.unsplash.com"],
+    domains: [
+      "image.tmdb.org",
+      "images.unsplash.com",
+      "lh3.googleusercontent.com",
+    ],
   },
 };
 
