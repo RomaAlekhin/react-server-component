@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FC, ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
-import { Home, Info, Newspaper, Clapperboard } from "lucide-react";
+import { Home, Newspaper, Clapperboard } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { ProfileMenu } from "./ProfileMenu";
 import { getIsActiveLink } from "./helper";
@@ -25,11 +25,6 @@ const links: Link[] = [
     name: "Home",
     href: "/",
     icon: <Home />,
-  },
-  {
-    name: "About",
-    href: "/about",
-    icon: <Info />,
   },
   {
     name: "Posts",
@@ -67,7 +62,7 @@ const DesktopNavigation: FC<NavigationProps> = ({ pathname }) => {
 const MobileNavigation: FC<NavigationProps> = ({ pathname }) => {
   return (
     <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-card-foreground">
-      <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
+      <div className="grid h-full max-w-lg grid-flow-col mx-auto font-medium">
         {links.map((link) => (
           <Link
             className={classNames(
