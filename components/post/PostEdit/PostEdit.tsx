@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/base/Button";
 import { FormCard } from "@/components/base/FormCard";
 import { InputField } from "@/components/form/Input";
 import { TextAreaField } from "@/components/form/TextArea";
+import { Button } from "@/components/ui/button";
 import { Post, Prisma } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
