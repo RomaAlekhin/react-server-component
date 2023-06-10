@@ -6,9 +6,9 @@ import { redirect } from "next/navigation";
 export default function ProtectedClient() {
   const { data: session } = useSession({
     required: true,
-    // onUnauthenticated() {
-    //   redirect("/signin?callbackUrl=/protected/client");
-    // },
+    onUnauthenticated() {
+      redirect("/signin?callbackUrl=/protected/client");
+    },
   });
 
   return (
