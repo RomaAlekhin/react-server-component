@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { useSession } from "next-auth/react";
-import { updateName } from "@/lib/prisma/users";
+import { updateName } from "@/lib/actions/users";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
@@ -25,7 +25,7 @@ export const UserProfileForm = () => {
       return;
 
     // Server action
-    await updateName(email, { name });
+    await updateName(email, name);
 
     // Update next-auth session
     await update({ name });

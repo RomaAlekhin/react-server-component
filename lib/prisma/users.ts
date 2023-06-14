@@ -3,12 +3,9 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from ".";
 
-export const updateName = async (
+export const updateUser = async (
   email: string,
-  update: Prisma.UserUpdateInput
+  data: Prisma.UserUpdateInput
 ) => {
-  return await prisma.user.update({
-    where: { email },
-    data: { name: update.name },
-  });
+  return await prisma.user.update({ where: { email }, data });
 };
