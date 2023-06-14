@@ -1,5 +1,5 @@
 import { PostCard } from "@/components/post";
-import { getPost, getPostComments } from "@/lib/actions";
+import { getPost, getPostComments } from "@/lib/prisma/posts";
 
 interface Props {
   params: { slug: string };

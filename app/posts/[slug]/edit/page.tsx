@@ -1,5 +1,5 @@
 import { PostEdit } from "@/components/post";
-import { getPost, updatePost } from "@/lib/actions";
+import { getPost, updatePost } from "@/lib/prisma/posts";
 import { Prisma } from "@prisma/client";
 
 interface Props {

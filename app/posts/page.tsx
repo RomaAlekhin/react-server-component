@@ -1,7 +1,7 @@
 // import { Button } from "@/components/base/Button";
 import { Content, Header } from "@/components/layout";
 import { Button } from "@/components/ui/button";
-import { getPosts } from "@/lib/actions";
+import { getPosts } from "@/lib/prisma/posts";
 import Link from "next/link";
 
 export default async function Posts() {

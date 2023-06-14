@@ -1,5 +1,5 @@
 import { PostEdit } from "@/components/post";
-import { createPost } from "@/lib/actions";
+import { createPost } from "@/lib/prisma/posts";
 import { Prisma } from "@prisma/client";
 
 export default function PostAdd() {
