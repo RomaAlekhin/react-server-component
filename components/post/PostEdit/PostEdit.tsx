@@ -10,7 +10,7 @@ import { useCallback, useState } from "react";
 
 interface Props {
   post?: Post;
-  onSave: (post: Prisma.PostCreateInput) => Promise<Post>;
+  onSave: (post: Prisma.PostCreateInput) => Promise<Post | undefined>;
 }
 
 export const PostEdit: React.FC<Props> = ({ post, onSave }) => {
@@ -31,7 +31,9 @@ export const PostEdit: React.FC<Props> = ({ post, onSave }) => {
   const onSaveHandler = useCallback(async () => {
     if (!form) return;
     const newPost = await onSave(form);
-    push(`/posts/${newPost.id}`);
+    if (newPost) {
+      push(`/posts/${newPost.id}`);
+    }
     refresh();
   }, [form]);
 

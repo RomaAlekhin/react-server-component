@@ -1,11 +1,21 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]";
 import { PostEdit } from "@/components/post";
 import { getPost, updatePost } from "@/lib/prisma/posts";
 import { Prisma } from "@prisma/client";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 interface Props {
   params: { slug: string };
 }
+
 export default async function PostAdd({ params }: Props) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect(`/signin?callbackUrl=/posts/${params.slug}/edit`);
+  }
+
   const post = await getPost(params.slug);
 
   const onSaveHandler = async (post: Prisma.PostCreateInput) => {

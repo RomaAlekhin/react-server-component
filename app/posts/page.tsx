@@ -1,36 +1,32 @@
-// import { Button } from "@/components/base/Button";
 import { Content, Header } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { getPosts } from "@/lib/prisma/posts";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { authOptions } from "../api/auth/[...nextauth]";
+import Image from "next/image";
+import { PostItem } from "./PostItem";
 
 export default async function Posts() {
   const posts = await getPosts();
+  const session = await getServerSession(authOptions);
 
   return (
     <>
       <Header
         title="Posts"
         action={
-          <Button asChild>
-            <Link href="/posts/add">Add post</Link>
-          </Button>
+          session ? (
+            <Button asChild>
+              <Link href="/posts/add">Add post</Link>
+            </Button>
+          ) : null
         }
       />
       <Content>
-        <ul className="space-y-4">
+        <ul className="grid grid-cols-fluid gap-6">
           {posts.map((post) => (
-            <li key={post.id}>
-              <Link
-                href={"/posts/" + post.id}
-                className="bg-card-foreground flex py-2 px-3 justify-between items-end rounded"
-              >
-                <p className="text-xl font-bold hover:underline">
-                  {post.title}
-                </p>
-                <p className="text-xs">{post.createdAt.toLocaleString()}</p>
-              </Link>
-            </li>
+            <PostItem key={post.id} post={post} />
           ))}
         </ul>
       </Content>
