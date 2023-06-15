@@ -7,6 +7,7 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -45,6 +46,14 @@ export const ProfileMenu = () => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-56">
+        <DropdownMenuLabel>{session?.user?.name}</DropdownMenuLabel>
+
+        <DropdownMenuLabel className="font-medium">
+          {session?.user?.email}
+        </DropdownMenuLabel>
+
+        <DropdownMenuSeparator />
+
         <DropdownMenuGroup>
           <DropdownMenuItem asChild className="cursor-pointer">
             <Link href="/profile" title="Profile">

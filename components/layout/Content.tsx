@@ -11,7 +11,7 @@ export const Content: FC<Props> = ({ children, className }) => {
     <main
       className={classNames(
         className,
-        "mx-auto max-w-7xl py-6 px-3 sm:px-6 lg:px-8"
+        "mx-auto max-w-7xl pt-6 pb-20 px-3 md:pb-6 sm:px-6 lg:px-8"
       )}
     >
       {children}

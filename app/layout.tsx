@@ -3,6 +3,7 @@ import { Work_Sans } from "next/font/google";
 import classNames from "classnames";
 import { Navigation } from "@/components/layout";
 import { Provider } from "@/components/Provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const workSans = Work_Sans({ subsets: ["latin"] });
 
@@ -25,6 +26,8 @@ export default function RootLayout({
             {children}
           </div>
         </Provider>
+
+        <Toaster />
       </body>
     </html>
   );
