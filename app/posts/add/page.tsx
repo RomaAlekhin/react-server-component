@@ -1,11 +1,22 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]";
 import { PostEdit } from "@/components/post";
-import { createPost } from "@/lib/actions";
+import { createPost } from "@/lib/prisma/posts";
 import { Prisma } from "@prisma/client";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default function PostAdd() {
+export default async function PostAdd() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect("/signin?callbackUrl=/posts/add");
+  }
+
   const onSaveHandler = async (post: Prisma.PostCreateInput) => {
     "use server";
-    return await createPost(post);
+    if (session.user?.id) {
+      return await createPost(session.user.id, post);
+    }
   };
 
   return (
