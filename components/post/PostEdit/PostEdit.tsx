@@ -6,7 +6,7 @@ import { TextAreaField } from "@/components/form/TextArea";
 import { Button } from "@/components/ui/button";
 import { Post, Prisma } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useTransition } from "react";
 
 interface Props {
   post?: Post;
@@ -15,6 +15,7 @@ interface Props {
 
 export const PostEdit: React.FC<Props> = ({ post, onSave }) => {
   const { push, refresh } = useRouter();
+  const [pending, startTransition] = useTransition();
 
   const [form, setForm] = useState<Prisma.PostCreateInput>({
     title: post?.title ?? "",
@@ -30,11 +31,14 @@ export const PostEdit: React.FC<Props> = ({ post, onSave }) => {
 
   const onSaveHandler = useCallback(async () => {
     if (!form) return;
-    const newPost = await onSave(form);
-    if (newPost) {
-      push(`/posts/${newPost.id}`);
-    }
-    refresh();
+
+    startTransition(async () => {
+      const newPost = await onSave(form);
+      if (newPost) {
+        push(`/posts/${newPost.id}`);
+      }
+      refresh();
+    });
   }, [form]);
 
   return (
@@ -62,6 +66,7 @@ export const PostEdit: React.FC<Props> = ({ post, onSave }) => {
 
         <div className="flex justify-end mt-6">
           <Button
+            disabled={pending}
             onClick={(e) => {
               e.preventDefault();
               onSaveHandler();

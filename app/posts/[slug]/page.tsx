@@ -1,13 +1,6 @@
 import { Content } from "@/components/layout";
 import { PostCard } from "@/components/post";
-import { getPost, getPostComments, getPosts } from "@/lib/prisma/posts";
-
-export async function generateStaticParams() {
-  const posts = await getPosts();
-  return posts.map((post) => ({
-    slug: post.id,
-  }));
-}
+import { getPost, getPostComments } from "@/lib/prisma/posts";
 
 interface Props {
   params: { slug: string };
