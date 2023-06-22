@@ -43,6 +43,7 @@ const DesktopNavigation: FC<NavigationProps> = ({ pathname }) => {
     <div className="ml-10 flex items-baseline space-x-4">
       {links.map((link) => (
         <Link
+          key={link.name}
           className={classNames(
             "rounded-md px-3 py-2 text-sm font-medium",
             getIsActiveLink(link.href, pathname)
@@ -65,6 +66,7 @@ const MobileNavigation: FC<NavigationProps> = ({ pathname }) => {
       <div className="grid h-full max-w-lg grid-flow-col mx-auto font-medium">
         {links.map((link) => (
           <Link
+            key={link.name}
             className={classNames(
               "px-3 py-2 m-auto text-base font-medium h-full w-full flex items-center justify-center transition-colors",
               getIsActiveLink(link.href, pathname)
