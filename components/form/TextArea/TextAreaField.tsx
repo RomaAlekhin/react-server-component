@@ -1,8 +1,8 @@
-import { ComponentProps, FC, TextareaHTMLAttributes } from "react";
+import { ComponentProps, FC } from "react";
+import { Textarea } from "@/components/ui/textarea";
 import { Field } from "../Field";
-import { TextArea } from "./TextArea";
 
-interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface Props extends ComponentProps<typeof Textarea> {
   name: string;
   label: string;
   className?: ComponentProps<typeof Field>["className"];
@@ -16,7 +16,7 @@ export const TextAreaField: FC<Props> = ({
 }) => {
   return (
     <Field name={name} label={label} className={className}>
-      <TextArea {...rest} id={name} />
+      <Textarea {...rest} id={name} />
     </Field>
   );
 };

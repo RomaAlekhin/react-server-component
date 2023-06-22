@@ -13,7 +13,7 @@ export const Field: React.FC<Props> = ({
 }) => {
   return (
     <div className={className}>
-      <label className="text-card" htmlFor={name}>
+      <label className="inline-block mb-2" htmlFor={name}>
         {label}
       </label>
       {children}

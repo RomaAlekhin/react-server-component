@@ -3,7 +3,16 @@
 import { FormCard } from "@/components/base/FormCard";
 import { InputField } from "@/components/form/Input";
 import { TextAreaField } from "@/components/form/TextArea";
+// import { InputField } from "@/components/form/Input";
+// import { TextAreaField } from "@/components/form/TextArea";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Post, Prisma } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useCallback, useState, useTransition } from "react";
@@ -16,6 +25,7 @@ interface Props {
 export const PostEdit: React.FC<Props> = ({ post, onSave }) => {
   const { push, refresh } = useRouter();
   const [pending, startTransition] = useTransition();
+  const title = post ? "Edit post" : "Add post";
 
   const [form, setForm] = useState<Prisma.PostCreateInput>({
     title: post?.title ?? "",
@@ -33,39 +43,45 @@ export const PostEdit: React.FC<Props> = ({ post, onSave }) => {
     if (!form) return;
 
     startTransition(async () => {
-      const newPost = await onSave(form);
-      if (newPost) {
-        push(`/posts/${newPost.id}`);
-      }
+      await onSave(form);
+      push("/posts");
       refresh();
     });
   }, [form]);
 
   return (
-    <FormCard title="Post">
+    <Card className="max-w-xl w-10/12">
+      <CardHeader>
+        <CardTitle>
+          <h1 className="text-xl font-bold capitalize">{title}</h1>
+        </CardTitle>
+      </CardHeader>
       <form>
-        <div className="grid grid-cols-1 gap-6 mt-4">
-          <InputField
-            className="col-span-2"
-            label="Title"
-            name="title"
-            type="text"
-            value={form?.title ?? ""}
-            onChange={(e) => onChangeHandler("title")(e.target.value)}
-          />
+        <CardContent>
+          <div className="grid grid-cols-1 gap-6">
+            <InputField
+              className="col-span-2"
+              label="Title"
+              name="title"
+              type="text"
+              value={form?.title ?? ""}
+              onChange={(e) => onChangeHandler("title")(e.target.value)}
+            />
 
-          <TextAreaField
-            className="col-span-2"
-            label="Content"
-            name="content"
-            rows={6}
-            value={form?.content ?? ""}
-            onChange={(e) => onChangeHandler("content")(e.target.value)}
-          />
-        </div>
+            <TextAreaField
+              className="col-span-2"
+              label="Content"
+              name="content"
+              rows={6}
+              value={form?.content ?? ""}
+              onChange={(e) => onChangeHandler("content")(e.target.value)}
+            />
+          </div>
+        </CardContent>
 
-        <div className="flex justify-end mt-6">
+        <CardFooter className="justify-end">
           <Button
+            className="w-full"
             disabled={pending}
             onClick={(e) => {
               e.preventDefault();
@@ -74,8 +90,8 @@ export const PostEdit: React.FC<Props> = ({ post, onSave }) => {
           >
             Save
           </Button>
-        </div>
+        </CardFooter>
       </form>
-    </FormCard>
+    </Card>
   );
 };

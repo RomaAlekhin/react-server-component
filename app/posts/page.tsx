@@ -24,11 +24,11 @@ export default async function Posts() {
         }
       />
       <Content>
-        <ul className="grid grid-cols-fluid gap-6">
+        <div className="grid grid-cols-fluid gap-6">
           {posts.map((post) => (
             <PostItem key={post.id} post={post} />
           ))}
-        </ul>
+        </div>
       </Content>
     </>
   );

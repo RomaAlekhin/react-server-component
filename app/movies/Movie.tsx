@@ -1,3 +1,10 @@
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -17,15 +24,22 @@ export default function Movie({
   const imagePath = `${process.env.THE_MOVIE_DB_IMAGES_URL}${poster_path}`;
 
   return (
-    <div>
-      <Link
-        href={"/movies/" + id}
-        className="bg-card-foreground block p-6 rounded space-y-3"
-      >
-        <p className="text-xl font-bold">{title}</p>
-        <p className="text-xs">{release_date}</p>
-        <Image src={imagePath} alt={title} width={800} height={800} />
-      </Link>
-    </div>
+    <Link href={"/movies/" + id}>
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <p className="text-xl font-bold">{title}</p>
+          </CardTitle>
+
+          <CardDescription>
+            <p className="text-xs">{release_date}</p>
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent className="p-0 rounded-b-lg overflow-hidden">
+          <Image src={imagePath} alt={title} width={800} height={800} />
+        </CardContent>
+      </Card>
+    </Link>
   );
 }

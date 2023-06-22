@@ -1,8 +1,8 @@
-import { ComponentProps, FC, InputHTMLAttributes } from "react";
-import { Input } from "./Input";
+import { ComponentProps, FC } from "react";
+import { Input } from "@/components/ui/input";
 import { Field } from "../Field";
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+interface Props extends ComponentProps<typeof Input> {
   name: string;
   label: string;
   className?: ComponentProps<typeof Field>["className"];
